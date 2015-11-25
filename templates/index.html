@@ -5,43 +5,14 @@
 {% block specifika %}
 
 {% if logiran %}
-    <h1>Vnesite sporočilo</h1>
-        <form method='post' action='/redirect'>
-        <ul>
-            <li> Ime</li>
-            <li><input name='fime' value="{{ user.nickname() }}" readonly ></li>
-            <li> Priimek</li>
-            <li><input name='fpriimek'></li>
-            <li> Email</li>
-            <li><input name='femail' value="{{ user.email() }}" readonly></li>
-            <li> Sporocilo</li>
-            <li><textarea rows="4" cols="50" name='fsporocilo' onclick="this.focus();this.select()">Obvezno vpisi kaj notri</textarea></li>
-            <li><button class=myButton type='submit'>Objavi</button></li>
-            </ul>
+    <h1>Dobrodošli na naši strani!!!</h1>
 
-
-    <h1 id=h1seznam>Seznam sporočil</h1>
-
-    {% for forum in forumseznam %}
-        <p>Ime: <a href="/forum/{{ forum.key.id() }}">{{ forum.fime }}</a></p>
-        <p>Sporočilo: {{ forum.fsporocilo }} </p>
-        <p>   --------------------------- </p>
-    {% endfor %}
-    <div id="link">
-        <a id=aback href="/">Tukaj klikni za nazaj</a>
-    </div>
     <p>Odjavi se: <a href="{{ logout_url }}">Logout</a></p>
 {% else %}
-    <h1>Hello stari, dej se prijavi</h1>
-
-    <p>Prijavi se na: <a href="{{ login_url }}">Login</a></p>
+    <h1>Dobrodošli na naši strani!!!</h1>
+    <h2>Ker skrbimo za varnost se prosim prijavi <a href="{{ login_url }}">tukaj</a></h2>
 {% endif %}
-<h1>A Bootstrap Starter Template</h1>
-<p class="lead">Complete with pre-defined file paths that you won't have to change!</p>
-<ul class="list-unstyled">
-    <li>Bootstrap v3.3.1</li>
-    <li>jQuery v1.11.1</li>
-</ul>
+
 
 
 
