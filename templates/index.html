@@ -6,14 +6,24 @@
 
 {% if logiran %}
     <h1>Dobrodošli na naši strani!!!</h1>
+    <div id="link">
+        <a href="/prejetasporocila">Prejeta sporočila</a>
+    </div>
 
-    <p>Odjavi se: <a href="{{ logout_url }}">Logout</a></p>
+    <div id="link">
+        <a href="/poslanasporocila">Poslana sporočila</a>
+    </div>
+
+    <div id="link">
+        <a href="/vreme">Vreme</a>
+    </div>
+
+
+
+
+    <p><a href="{{ logout_url }}">Odjavi se tukaj</a></p>
 {% else %}
     <h1>Dobrodošli na naši strani!!!</h1>
     <h2>Ker skrbimo za varnost se prosim prijavi <a href="{{ login_url }}">tukaj</a></h2>
 {% endif %}
-
-
-
-
 {% endblock specifika %}

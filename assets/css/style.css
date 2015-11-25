@@ -3,5 +3,19 @@ body {
 }
 
 .col-lg-12 {
-    background-color:red;
+    background-color:white;
 }
+
+
+#link{
+
+  max-width: 200px;
+  font: bold 18px Arial;
+
+  text-decoration: none;
+  background-color: lightyellow;
+  color: #333333;
+  padding: 10px 18px;
+  margin-bottom: 20px;
+  border-radious: 5px;
+  }
