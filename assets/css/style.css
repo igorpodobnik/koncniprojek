@@ -6,11 +6,16 @@ body {
     background-color:white;
 }
 
+h1{
+margin-bottom:100px;
+}
 
 #link{
 
+
   max-width: 200px;
   font: bold 18px Arial;
+
 
   text-decoration: none;
   background-color: lightyellow;
