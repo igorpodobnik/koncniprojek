@@ -15,7 +15,7 @@
                 <li>
                     <select name="prejemnik">
                         {% for n in prejemniki  %}
-                        <option value="{{ prejemniki.email() }}">{{ Uporabniki.email() }}</option>
+                        <option value="{{ n.user }}">{{ n.user }}</option>
                         {% endfor %}
                     </select>
                 </li>

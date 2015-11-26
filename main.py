@@ -50,6 +50,7 @@ class WeatherHandler(BaseHandler):
         podatki = json.loads(result.content)
         params = {"podatki": podatki}
         is_logged_in(params)
+        print params
         self.render_template("weather.html", params=params)
 
 class RedirectHandler(BaseHandler):
@@ -67,7 +68,7 @@ class CreateHandler(BaseHandler):
     def get(self):
         is_logged_in(params)
         seznamuserjev = Uporabniki.query().fetch()
-        posiljatelj = {"prejemniki": seznamuserjev}
+        posiljatelj = {"prejemniki":seznamuserjev}
         params.update(posiljatelj)
         print "PARAMS"
         print params
