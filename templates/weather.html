@@ -5,22 +5,15 @@
 {% block specifika %}
 
 {% if logiran %}
-    <h1>Dobrodošli na naši strani!!!</h1>
+    <h1>Vreme v naslednjih krajih</h1>
 
-    <div id="link" >
-        <a href="/create">Pošlji sporočilo</a>
-    </div>
-
+    {% for n in range(3)  %}
+        <h2>Vreme v kraju {{ podatki.list[n].name }}</h2>
+        <p>Opis: {{ podatki.list[n].weather[0].description }}</p>
+        <p>Trenutna temperatura: {{ podatki.list[n].main.temp }} stopinj C</p>
+        {% endfor %}
     <div id="link">
-        <a href="/prejetasporocila">Prejeta sporočila</a>
-    </div>
-
-    <div id="link">
-        <a href="/poslanasporocila">Poslana sporočila</a>
-    </div>
-
-    <div id="link">
-        <a href="/weather">Vreme</a>
+        <a href="/">Nazaj na začetek</a>
     </div>
 
     <p><a href="{{ logout_url }}">Odjavi se tukaj</a></p>

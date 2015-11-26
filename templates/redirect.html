@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Main{% endblock title %}
+
+{% block css %}
+<meta http-equiv="refresh" content="0; url=/" />
+{% endblock css %}
+
+{% block specifika %}
+
+{% if logiran %}
+    <h1>Dobrodošli na naši strani!!!</h1>
+
+    Samo na hitra preusmeritev da ne podvajam v bazi :) bo hitro mimo.
+
+{% else %}
+    <h1>Dobrodošli na naši strani!!!</h1>
+    <h2>Ker skrbimo za varnost se prosim prijavi <a href="{{ login_url }}">tukaj</a></h2>
+{% endif %}
+{% endblock specifika %}

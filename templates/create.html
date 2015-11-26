@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Main{% endblock title %}
+
+{% block specifika %}
+
+{% if logiran %}
+    <h1>Dobrodošli na naši strani!!!</h1>
+    <h1>Vnesite sporočilo</h1>
+            <form method='post' action='/redirect'>
+            <ul>
+                <li> Pošiljatelj</li>
+                <li><input name='posiljatelj' value="{{ user.email() }}" readonly ></li>
+                <li> Prejemnik</li>
+                <li>
+                    <select name="prejemnik">
+                        {% for n in prejemniki  %}
+                        <option value="{{ prejemniki.email() }}">{{ Uporabniki.email() }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li><textarea rows="4" cols="50" name='sporocilo' onclick="this.focus();this.select()">Obvezno vpisi kaj notri</textarea></li>
+                <li><button class=myButton type='submit'>Objavi</button></li>
+                </ul>
+
+
+    <div id="link">
+        <a href="/">Nazaj na začetek</a>
+    </div>
+
+    <p><a href="{{ logout_url }}">Odjavi se tukaj</a></p>
+{% else %}
+    <h1>Dobrodošli na naši strani!!!</h1>
+    <h2>Ker skrbimo za varnost se prosim prijavi <a href="{{ login_url }}">tukaj</a></h2>
+{% endif %}
+{% endblock specifika %}
