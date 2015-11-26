@@ -37,6 +37,10 @@ class MainHandler(BaseHandler):
         is_logged_in(params)
         return self.render_template("index.html",params=params)
 
+
+
+
+
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
 ], debug=True)
