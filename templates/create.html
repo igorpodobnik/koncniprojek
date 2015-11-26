@@ -8,11 +8,10 @@
     <h1>Dobrodošli na naši strani!!!</h1>
     <h1>Vnesite sporočilo</h1>
             <form method='post' action='/redirect'>
-            <ul>
-                <li> Pošiljatelj</li>
-                <li><input name='posiljatelj' value="{{ user.email() }}" readonly ></li>
-                <li> Prejemnik</li>
-                <li>
+            <ol>
+                <li> Pošiljatelj: {{ user.email() }}</li>
+                <li> Prejemnik
+
                     <select name="prejemnik">
                         {% for n in prejemniki  %}
                         <option value="{{ n.user }}">{{ n.user }}</option>
@@ -21,7 +20,7 @@
                 </li>
                 <li><textarea rows="4" cols="50" name='sporocilo' onclick="this.focus();this.select()">Obvezno vpisi kaj notri</textarea></li>
                 <li><button class=myButton type='submit'>Objavi</button></li>
-                </ul>
+            </ol>
 
 
     <div id="link">

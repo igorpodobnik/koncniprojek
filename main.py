@@ -74,7 +74,7 @@ class CreateHandler(BaseHandler):
         print params
         return self.render_template("create.html" , params=params)
 
-
+#todo: seznam prejetih in seznam poslanih sporoèil še manjka.
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
