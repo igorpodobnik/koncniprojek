@@ -24,7 +24,7 @@ margin-bottom:100px;
   border-radious: 5px;
   }
 
-ol{
+#col{
     list-style-type: none;
     text-align:center;
     margin: 0;
@@ -47,7 +47,7 @@ height:50px;
 
 }
 
-li{
+#cli{
 margin-bottom:20px;
 }
 
