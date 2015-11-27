@@ -16,6 +16,7 @@ template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=False)
 params={}
 
+
 class BaseHandler(webapp2.RequestHandler):
 
     def write(self, *a, **kw):
@@ -38,6 +39,7 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
     def get(self):
         is_logged_in(params)
+
 
         return self.render_template("index.html",params=params)
 
@@ -94,7 +96,8 @@ class MyMessagesHandler(BaseHandler):
         for user in Sporocilo.query(ndb.AND(Sporocilo.reciever == emailprejemnika,Sporocilo.new == True)):
             user.new = False
             user.put()
-
+        #ce bi zelel da vedno prvilno pokazemo stevilko pri novih sporocilih.
+        #time.sleep(1)
         return self.render_template("prejeta.html" , params=params)
 
 
