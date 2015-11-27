@@ -8,6 +8,8 @@ from models import Sporocilo,Uporabniki
 import json
 import time
 from google.appengine.api import users
+from google.appengine.ext import ndb
+
 
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
@@ -81,10 +83,11 @@ class MyMessagesHandler(BaseHandler):
         emailprejemnika = user.email()
         #fseznam = Forum.query().fetch()
         #v query das notri pogoj
-        seznam = Sporocilo.query(Sporocilo.reciever == emailprejemnika).fetch()
+        oldseznam = Sporocilo.query(ndb.AND(Sporocilo.reciever == emailprejemnika,Sporocilo.new == False)).fetch()
+        newseznam = Sporocilo.query(ndb.AND(Sporocilo.reciever == emailprejemnika,Sporocilo.new == True)).fetch()
         # SORT order takole zgleda... reverse za najvecjega navzdol
-        seznam = sorted(seznam, key=lambda dat:dat.created, reverse=True)
-        params = {"seznam" : seznam }
+        oldseznam = sorted(oldseznam, key=lambda dat:dat.created, reverse=True)
+        params = {"seznam" : oldseznam, "new": newseznam }
         is_logged_in(params)
         return self.render_template("prejeta.html" , params=params)
 
@@ -102,7 +105,7 @@ class SendMessagesHandler(BaseHandler):
         is_logged_in(params)
         return self.render_template("poslana.html" , params=params)
 
-#todo: seznam prejetih naj locuje nove od starih. Dobi stevilko novih prejetih na main page. UREDI CSS!!!
+#todo: seznam prejetih naj potem ko pokaze nove ta tag zamenja. Dobi stevilko novih prejetih na main page. UREDI CSS!!!
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
