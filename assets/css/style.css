@@ -35,3 +35,22 @@ ol{
 
 font: bold 22px Arial;
 }
+
+button{
+width:200px;
+height:50px;
+}
+
+li{
+margin-bottom:20px;
+}
+
+textarea{
+resize: none;
+}
+
+
+input,li,select {
+font-family: "Arial";
+font-size:18px;
+}

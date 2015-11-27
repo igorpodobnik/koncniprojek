@@ -5,12 +5,12 @@
 {% block specifika %}
 
 {% if logiran %}
-    <h1>Dobrodošli na naši strani!!!</h1>
+
     <h1>Vnesite sporočilo</h1>
             <form method='post' action='/redirect'>
             <ol>
                 <li>Pošiljatelj: <input name='posiljatelj' value="{{ user.email() }}" readonly ></li>
-                <li> Prejemnik
+                <li>Prejemnik:
 
                     <select name="prejemnik">
                         {% for n in prejemniki  %}

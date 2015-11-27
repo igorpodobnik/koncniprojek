@@ -5,9 +5,9 @@
 {% block specifika %}
 
 {% if logiran %}
-    <h1>Dobrodošli na naši strani!!!</h1>
+    <h1>Vsa prejeta sporčila</h1>
 
-    <p id="phead">Nova sporočila</p>
+    <p id="phead">--- Nova sporočila ---</p>
 
     {% for forum in new %}
         <p>Pošiljatelj: <a href="/">{{ forum.sender }}</a></p>
@@ -15,7 +15,7 @@
         <p>   --------------------------- </p>
     {% endfor %}
 
-    <p id="phead">Stara sporočila</p>
+    <p id="phead">--- Stara sporočila ---</p>
 
     {% for forum in seznam %}
         <p>Pošiljatelj: <a href="/">{{ forum.sender }}</a></p>
