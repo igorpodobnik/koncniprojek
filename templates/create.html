@@ -9,7 +9,7 @@
     <h1>Vnesite sporočilo</h1>
             <form method='post' action='/redirect'>
             <ol>
-                <li> Pošiljatelj: {{ user.email() }}</li>
+                <li>Pošiljatelj: <input name='posiljatelj' value="{{ user.email() }}" readonly ></li>
                 <li> Prejemnik
 
                     <select name="prejemnik">

@@ -7,20 +7,15 @@
 {% if logiran %}
     <h1>Dobrodošli na naši strani!!!</h1>
 
-    <div id="link" >
-        <a href="/create">Pošlji sporočilo</a>
-    </div>
+    {% for forum in seznam %}
+        <p>Prejemnik: <a href="/">{{ forum.reciever }}</a></p>
+        <p>Sporočilo: {{ forum.message }} </p>
+        <p>   --------------------------- </p>
+    {% endfor %}
+
 
     <div id="link">
-        <a href="/mymessages">Prejeta sporočila</a>
-    </div>
-
-    <div id="link">
-        <a href="/sendmessages">Poslana sporočila</a>
-    </div>
-
-    <div id="link">
-        <a href="/weather">Vreme</a>
+        <a id=aback href="/">Tukaj klikni za nazaj</a>
     </div>
 
     <p><a href="{{ logout_url }}">Odjavi se tukaj</a></p>

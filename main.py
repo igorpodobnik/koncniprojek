@@ -7,7 +7,7 @@ from google.appengine.api import urlfetch
 from models import Sporocilo,Uporabniki
 import json
 import time
-
+from google.appengine.api import users
 
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
@@ -74,13 +74,41 @@ class CreateHandler(BaseHandler):
         print params
         return self.render_template("create.html" , params=params)
 
-#todo: seznam prejetih in seznam poslanih sporoèil še manjka.
+
+class MyMessagesHandler(BaseHandler):
+    def get(self):
+        user = users.get_current_user()
+        emailprejemnika = user.email()
+        #fseznam = Forum.query().fetch()
+        #v query das notri pogoj
+        seznam = Sporocilo.query(Sporocilo.reciever == emailprejemnika).fetch()
+        # SORT order takole zgleda... reverse za najvecjega navzdol
+        seznam = sorted(seznam, key=lambda dat:dat.created, reverse=True)
+        params = {"seznam" : seznam }
+        is_logged_in(params)
+        return self.render_template("prejeta.html" , params=params)
+
+
+class SendMessagesHandler(BaseHandler):
+    def get(self):
+        user = users.get_current_user()
+        emailprejemnika = user.email()
+        #fseznam = Forum.query().fetch()
+        #v query das notri pogoj
+        seznam = Sporocilo.query(Sporocilo.sender == emailprejemnika).fetch()
+        # SORT order takole zgleda... reverse za najvecjega navzdol
+        seznam = sorted(seznam, key=lambda dat:dat.created, reverse=True)
+        params = {"seznam" : seznam }
+        is_logged_in(params)
+        return self.render_template("poslana.html" , params=params)
+
+#todo: seznam prejetih naj locuje nove od starih. Dobi stevilko novih prejetih na main page. UREDI CSS!!!
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
     webapp2.Route('/create', CreateHandler),
-    #webapp2.Route('/mymessages', MyMessagesHandler),
-    #webapp2.Route('/sendmessages', SendMessagesHandler),
+    webapp2.Route('/mymessages', MyMessagesHandler),
+    webapp2.Route('/sendmessages', SendMessagesHandler),
     webapp2.Route('/weather', WeatherHandler),
     webapp2.Route('/redirect', RedirectHandler),
 ], debug=True)
