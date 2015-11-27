@@ -89,6 +89,12 @@ class MyMessagesHandler(BaseHandler):
         oldseznam = sorted(oldseznam, key=lambda dat:dat.created, reverse=True)
         params = {"seznam" : oldseznam, "new": newseznam }
         is_logged_in(params)
+        #nova spremeni v stara
+
+        for user in Sporocilo.query(ndb.AND(Sporocilo.reciever == emailprejemnika,Sporocilo.new == True)):
+            user.new = False
+            user.put()
+
         return self.render_template("prejeta.html" , params=params)
 
 
