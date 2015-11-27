@@ -107,10 +107,12 @@ class SendMessagesHandler(BaseHandler):
         emailprejemnika = user.email()
         #fseznam = Forum.query().fetch()
         #v query das notri pogoj
-        seznam = Sporocilo.query(Sporocilo.sender == emailprejemnika).fetch()
+        oldseznam = Sporocilo.query(ndb.AND(Sporocilo.sender == emailprejemnika,Sporocilo.new == False)).fetch()
+        newseznam = Sporocilo.query(ndb.AND(Sporocilo.sender == emailprejemnika,Sporocilo.new == True)).fetch()
         # SORT order takole zgleda... reverse za najvecjega navzdol
-        seznam = sorted(seznam, key=lambda dat:dat.created, reverse=True)
-        params = {"seznam" : seznam }
+        oldseznam = sorted(oldseznam, key=lambda dat:dat.created, reverse=True)
+        newseznam = sorted(newseznam, key=lambda dat:dat.created, reverse=True)
+        params = {"seznam" : oldseznam, "newseznam":newseznam }
         is_logged_in(params)
         return self.render_template("poslana.html" , params=params)
 

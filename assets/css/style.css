@@ -13,7 +13,7 @@ margin-bottom:100px;
 #link{
 
   margin:0 auto;
-  max-width: 200px;
+  max-width: 240px;
   font: bold 18px Arial;
 
   text-decoration: none;
@@ -37,7 +37,7 @@ font: bold 22px Arial;
 }
 
 button{
-width:200px;
+width:240px;
 height:50px;
 }
 
@@ -53,6 +53,7 @@ margin-bottom:20px;
 
 textarea{
 resize: none;
+max-width: 350px;
 }
 
 

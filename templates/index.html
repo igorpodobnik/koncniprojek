@@ -6,24 +6,32 @@
 
 {% if logiran %}
     <h1>Dobrodošli na naši strani!!!</h1>
-
-    <div id="link" >
-        <a href="/create">Pošlji sporočilo</a>
-    </div>
-
-    <div id="link">
-        <a href="/mymessages">Prejeta sporočila {{ stnovih }}</a>
-    </div>
-
-    <div id="link">
-        <a href="/sendmessages">Poslana sporočila</a>
-    </div>
-
+        <div id="link" >
+            <a href="/create">Pošlji sporočilo</a>
+        </div>
+    {% if stnovih > 0 %}
+        <div id="link">
+            <a href="/mymessages">Prejeta sporočila {{ stnovih }}</a>
+        </div>
+    {% else %}
+        <div id="link">
+            <a href="/mymessages">Prejeta sporočila</a>
+        </div>
+    {% endif %}
+    {% if stposlanih > 0 %}
+        <div id="link">
+            <a href="/sendmessages">Poslana sporočila {{ stposlanih }}</a>
+        </div>
+    {% else %}
+        <div id="link">
+            <a href="/sendmessages">Poslana sporočila</a>
+        </div>
+    {% endif %}
     <div id="link">
         <a href="/weather">Vreme</a>
     </div>
 
-    <p><a href="{{ logout_url }}">Odjavi se tukaj</a></p>
+
 {% else %}
     <h1>Dobrodošli na naši strani!!!</h1>
     <h2>Ker skrbimo za varnost se prosim prijavi <a href="{{ login_url }}">tukaj</a></h2>

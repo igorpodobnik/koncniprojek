@@ -5,7 +5,17 @@
 {% block specifika %}
 
 {% if logiran %}
-    <h1>Dobrodošli na naši strani!!!</h1>
+    <h1>Vsa poslana sporočila</h1>
+
+    <p id="phead">--- Neprebrana sporočila ---</p>
+
+    {% for forum in newseznam %}
+        <p>Prejemnik: <a href="/">{{ forum.reciever }}</a></p>
+        <p>Sporočilo: {{ forum.message }} </p>
+        <p>   --------------------------- </p>
+    {% endfor %}
+
+    <p id="phead">--- Prebrana sporočila ---</p>
 
     {% for forum in seznam %}
         <p>Prejemnik: <a href="/">{{ forum.reciever }}</a></p>

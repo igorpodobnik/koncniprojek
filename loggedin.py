@@ -10,6 +10,7 @@ def is_logged_in(P):
     Pint = P
     if user:
         stevilonovih = 0
+        steviloposlanih = 0
         logiran = True
         logout_url = users.create_logout_url('/')
         print "glej gor"
@@ -19,8 +20,12 @@ def is_logged_in(P):
         emailprejemnika = user.email()
         for novih in Sporocilo.query(ndb.AND(Sporocilo.reciever == emailprejemnika,Sporocilo.new == True)):
             stevilonovih +=1
-        params1 = {"stnovih":stevilonovih}
-        Pint.update(params1)
+        novihje = {"stnovih":stevilonovih}
+        Pint.update(novihje)
+        for starih in Sporocilo.query(ndb.AND(Sporocilo.sender == emailprejemnika,Sporocilo.new == True)):
+            steviloposlanih +=1
+        starihje = {"stposlanih":steviloposlanih}
+        Pint.update(starihje)
     else:
         logiran = False
         login_url = users.create_login_url('/')

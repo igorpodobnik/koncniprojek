@@ -64,6 +64,15 @@
                     <li>
                         <a href="/weather">Vreme</a>
                     </li>
+                    {% if logiran %}
+                    <li>
+                        <a href="{{ logout_url }}">Odjavi se</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="{{ login_url }}">Prijavi se</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
