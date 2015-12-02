@@ -14,3 +14,4 @@ class Sporocilo(ndb.Model):
 
 class Uporabniki(ndb.Model):
     user = ndb.StringProperty()
+    approved = ndb.BooleanProperty(default=False)

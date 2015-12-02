@@ -1,8 +1,9 @@
+# coding=utf-8
 __author__ = 'Igor'
 from google.appengine.api import users
 from models import Uporabniki,Sporocilo
 from google.appengine.ext import ndb
-
+from google.appengine.api import mail
 
 
 def is_logged_in(P):
@@ -14,7 +15,8 @@ def is_logged_in(P):
         logiran = True
         logout_url = users.create_logout_url('/')
         print "glej gor"
-        paramsif = {"logiran": logiran, "logout_url": logout_url, "user": user}
+        approved=preveriapproved()
+        paramsif = {"logiran": logiran, "logout_url": logout_url, "user": user,"approved":approved}
         Pint.update(paramsif)
         preverialiobstaja()
         emailprejemnika = user.email()
@@ -45,3 +47,16 @@ def preverialiobstaja():
         print "NOTRI JE ZE!"
     else:
         user.put()
+        mail.send_mail("podobnik.igor@gmail.com", "podobnik.igor@gmail.com", "Nov uporabnik", "Novega userja imaš in sicer %s" %emailprejemnika)
+
+def preveriapproved():
+    user = users.get_current_user()
+    emailprejemnika = user.email()
+    check=Uporabniki.query(ndb.AND(Uporabniki.user == emailprejemnika,Uporabniki.approved == True))
+    print check
+    print "Aproved??"
+    if check:
+        rezultat = "da"
+    else:
+        rezultat = "ne"
+    return rezultat
