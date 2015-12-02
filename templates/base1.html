@@ -85,9 +85,11 @@
 
         <div class="row">
             <div class="col-lg-12 text-center">
-                {% if logiran %}
+                {% if logiran and approved == "da" %}
                     {% block specifika %}
                     {% endblock specifika %}
+                {% elif logiran and approved == "ne" %}
+                    <h1>Počakaj da te approvamo!</h1>
                 {% else %}
                     <h1>Dobrodošli na naši strani!!!</h1>
                     <h2>Ker skrbimo za varnost se prosim prijavi <a href="{{ login_url }}">tukaj</a></h2>
