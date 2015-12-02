@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 import os
 import jinja2
 import webapp2
@@ -9,6 +10,7 @@ import json
 import time
 from google.appengine.api import users
 from google.appengine.ext import ndb
+from google.appengine.api import mail
 
 
 
@@ -54,7 +56,7 @@ class WeatherHandler(BaseHandler):
         podatki = json.loads(result.content)
         params = {"podatki": podatki}
         is_logged_in(params)
-        print params
+        #print params
         self.render_template("weather.html", params=params)
 
 class RedirectHandler(BaseHandler):
@@ -66,6 +68,7 @@ class RedirectHandler(BaseHandler):
             sporoc = Sporocilo(sender=posiljat, reciever=prejemni, message=sporocil)
             sporoc.put()
             time.sleep(1)
+            mail.send_mail("podobnik.igor@gmail.com", prejemni, "novo sporocilo", "Nov mejl :) poglej na http://koncniprojekt.appspot.com/ Sporocilo pa je: %s" %sporocil)
         return self.render_template("redirect.html" , params=params)
 
 class CreateHandler(BaseHandler):
@@ -74,8 +77,8 @@ class CreateHandler(BaseHandler):
         seznamuserjev = Uporabniki.query().fetch()
         posiljatelj = {"prejemniki":seznamuserjev}
         params.update(posiljatelj)
-        print "PARAMS"
-        print params
+        #print "PARAMS"
+        #print params
         return self.render_template("create.html" , params=params)
 
 
