@@ -1,18 +1,17 @@
 #!/usr/bin/env python
 # coding=utf-8
 import os
-import jinja2
-import webapp2
-from loggedin import is_logged_in
-from google.appengine.api import urlfetch
-from models import Sporocilo,Uporabniki
 import json
 import time
+
+import jinja2
+import webapp2
+from lib.loggedin import is_logged_in
+from google.appengine.api import urlfetch
+from lib.models import Sporocilo,Uporabniki
 from google.appengine.api import users
 from google.appengine.ext import ndb
 from google.appengine.api import mail
-
-
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=False)
@@ -119,7 +118,19 @@ class SendMessagesHandler(BaseHandler):
         is_logged_in(params)
         return self.render_template("poslana.html" , params=params)
 
-#todo: seznam prejetih naj potem ko pokaze nove ta tag zamenja. Dobi stevilko novih prejetih na main page. UREDI CSS!!!
+class TimeHandler(BaseHandler):
+    def get(self):
+        #v urlju so parametri ki jih zelimo videti loceni z ikonco &
+        # novo mesto 3194350 , 3239318 Ljubljana
+        url = "http://api.openweathermap.org/data/2.5/group?id=3196359,3194351,2639110&units=metric&appid=29fb19f38dde3e3bfe9f2c2536b414b0"
+        #zgornji je za vecmest, spodnji je za samo eno mesto
+        #url = "http://api.openweathermap.org/data/2.5/weather?q=Ljubljana&units=metric&appid=29fb19f38dde3e3bfe9f2c2536b414b0"
+        result = urlfetch.fetch(url)
+        podatki = json.loads(result.content)
+        params = {"podatki": podatki}
+        is_logged_in(params)
+        #print params
+        self.render_template("times.html", params=params)
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
@@ -128,4 +139,5 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/sendmessages', SendMessagesHandler),
     webapp2.Route('/weather', WeatherHandler),
     webapp2.Route('/redirect', RedirectHandler),
+    webapp2.Route('/time', TimeHandler),
 ], debug=True)
