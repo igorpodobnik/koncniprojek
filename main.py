@@ -120,13 +120,7 @@ class SendMessagesHandler(BaseHandler):
 
 class TimeHandler(BaseHandler):
     def get(self):
-        #v urlju so parametri ki jih zelimo videti loceni z ikonco &
-        # novo mesto 3194350 , 3239318 Ljubljana
-        url = "http://api.openweathermap.org/data/2.5/group?id=3196359,3194351,2639110&units=metric&appid=29fb19f38dde3e3bfe9f2c2536b414b0"
-        #zgornji je za vecmest, spodnji je za samo eno mesto
-        #url = "http://api.openweathermap.org/data/2.5/weather?q=Ljubljana&units=metric&appid=29fb19f38dde3e3bfe9f2c2536b414b0"
-        result = urlfetch.fetch(url)
-        podatki = json.loads(result.content)
+        podatki = "DA"
         params = {"podatki": podatki}
         is_logged_in(params)
         #print params
