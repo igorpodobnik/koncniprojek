@@ -5,6 +5,8 @@ import relativedelta
 from datetime import *; from relativedelta import *
 
 
+
+
 def izracun(dan,mesec):
     today = date.today()
     obletnica = date(today.year,mesec,dan)

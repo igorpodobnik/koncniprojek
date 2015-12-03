@@ -123,9 +123,13 @@ class SendMessagesHandler(BaseHandler):
 class TimeHandler(BaseHandler):
     def get(self):
         podatki = "DA"
-        params = {"podatki": podatki}
+
+        user = users.get_current_user()
+        emailprejemnika = user.email()
+        oldseznam = Obletnice.query(Obletnice.pripada == emailprejemnika).fetch()
+        params = {"podatki": oldseznam}
         is_logged_in(params)
-        #print params
+
         self.render_template("times.html", params=params)
 
 
@@ -139,6 +143,8 @@ class RedirecttimeHandler(BaseHandler):
         leto = int(rawdt[:4])
         mesec = int(rawdt [5:7])
         dan = int(rawdt [8:10])
+
+        #mogoce bi bilo bolje ce bi class naredil in te podatke notri dal - se boljse v bazo pisal locene podatke. sestavil nazaj ce treba. izracun naredil glede na podatke iz baze
         datum = datetime(leto,mesec,dan)
         dogodek = self.request.get("dogodek")
         if dogodek != "Obvezno vpisi kaj notri":

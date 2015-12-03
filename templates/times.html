@@ -12,6 +12,12 @@
             </ol>
 
 
+    {% for forum in podatki %}
+        <p>Prejemnik: {{ forum.event }}</a></p>
+        <p>Sporočilo: {{ forum.datum }} </p>
+        <p>   --------------------------- </p>
+    {% endfor %}
+
 
     <div id="link">
         <a href="/">Nazaj na začetek</a>
