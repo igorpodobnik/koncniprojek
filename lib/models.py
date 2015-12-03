@@ -15,3 +15,9 @@ class Sporocilo(ndb.Model):
 class Uporabniki(ndb.Model):
     user = ndb.StringProperty()
     approved = ndb.BooleanProperty(default=False)
+
+
+class Obletnice(ndb.Model):
+    event = ndb.StringProperty()
+    datum = ndb.DateProperty()
+    pripada = ndb.StringProperty()

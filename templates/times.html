@@ -1,17 +1,18 @@
 {% extends "base1.html" %}
 
-{% block title %}Main{% endblock title %}
+{% block title %}Time{% endblock title %}
 
 {% block specifika %}
 
+    <form method='post' action='/redirecttime'>
+            <ol id="col">
+                <li id="cli">Datum: <input type= "date" id="noborderinput" name='datum' ></li>
+                <li id="cli">Dogodek: <input name='dogodek' ></li>
+                <li id="cli"><button class=myButton type='submit'>Shrani</button></li>
+            </ol>
 
-    <h1>Vreme v naslednjih krajih</h1>
 
-    {% for n in range(3)  %}
-        <h2>Vreme v kraju {{ podatki.list[n].name }}</h2>
-        <p>Opis: {{ podatki.list[n].weather[0].description }}</p>
-        <p>Trenutna temperatura: {{ podatki.list[n].main.temp }} stopinj C</p>
-        {% endfor %}
+
     <div id="link">
         <a href="/">Nazaj na začetek</a>
     </div>

@@ -8,10 +8,12 @@ import jinja2
 import webapp2
 from lib.loggedin import is_logged_in
 from google.appengine.api import urlfetch
-from lib.models import Sporocilo,Uporabniki
+from lib.models import Sporocilo,Uporabniki,Obletnice
 from google.appengine.api import users
 from google.appengine.ext import ndb
 from google.appengine.api import mail
+import datetime
+from datetime import datetime
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=False)
@@ -126,6 +128,26 @@ class TimeHandler(BaseHandler):
         #print params
         self.render_template("times.html", params=params)
 
+
+
+# preko redirecta reseno postanje datumov v tabelo.
+class RedirecttimeHandler(BaseHandler):
+    def post(self):
+        user = users.get_current_user()
+        emailprejemnika = user.email()
+        rawdt = self.request.get("datum")
+        leto = int(rawdt[:4])
+        mesec = int(rawdt [5:7])
+        dan = int(rawdt [8:10])
+        datum = datetime(leto,mesec,dan)
+        dogodek = self.request.get("dogodek")
+        if dogodek != "Obvezno vpisi kaj notri":
+            dog = Obletnice(event=dogodek, datum=datum, pripada=emailprejemnika)
+            dog.put()
+            time.sleep(1)
+        is_logged_in(params)
+        return self.render_template("redirecttime.html" , params=params)
+
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
     webapp2.Route('/create', CreateHandler),
@@ -134,4 +156,5 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/weather', WeatherHandler),
     webapp2.Route('/redirect', RedirectHandler),
     webapp2.Route('/time', TimeHandler),
+    webapp2.Route('/redirecttime', RedirecttimeHandler),
 ], debug=True)
