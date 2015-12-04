@@ -3,7 +3,7 @@
 {% block title %}Time{% endblock title %}
 
 {% block specifika %}
-
+    <h1>Vnesi dogodek</h1>
     <form method='post' action='/redirecttime'>
             <ol id="col">
                 <li id="cli">Datum: <input type= "date" id="noborderinput" name='datum' ></li>
@@ -11,10 +11,10 @@
                 <li id="cli"><button class=myButton type='submit'>Shrani</button></li>
             </ol>
 
+    <h1>Seznam prihajajočih dogodkov</h1>
 
     {% for forum in podatki %}
-        <p>Prejemnik: {{ forum.event }}</a></p>
-        <p>Sporočilo: {{ forum.datum }} </p>
+        <p>Še <b>{{ forum.doroka }} dni</b> in bo dogodek: <b>{{ forum.event }}</b>, ki se je prvič zgodil: <b>{{ forum.datum }}</b></p>
         <p>   --------------------------- </p>
     {% endfor %}
 

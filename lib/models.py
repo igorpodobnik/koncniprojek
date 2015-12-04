@@ -21,3 +21,7 @@ class Obletnice(ndb.Model):
     event = ndb.StringProperty()
     datum = ndb.DateProperty()
     pripada = ndb.StringProperty()
+    leto = ndb.IntegerProperty()
+    mesec = ndb.IntegerProperty()
+    dan = ndb.IntegerProperty()
+    doroka = ndb.IntegerProperty(default=0)
