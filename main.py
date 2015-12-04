@@ -19,7 +19,7 @@ from lib.obletnica import izracun
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=False)
 params={}
-
+glavna_stevilka=3691
 
 class BaseHandler(webapp2.RequestHandler):
 
@@ -163,6 +163,35 @@ class RedirecttimeHandler(BaseHandler):
         is_logged_in(params)
         return self.render_template("redirecttime.html" , params=params)
 
+class UganiHandler(BaseHandler):
+    def post(self):
+
+
+        self.render_template("ugani.html", params=params)
+
+
+    def get(self):
+        podatki = "DA"
+
+        user = users.get_current_user()
+        emailprejemnika = user.email()
+        seznamrokov = Obletnice.query(Obletnice.pripada == emailprejemnika).fetch()
+
+        for i in range(len(seznamrokov)):
+            dan=seznamrokov[i].dan
+            mesec=seznamrokov[i].mesec
+            rezultat = izracun(dan,mesec)
+            seznamrokov[i].doroka=rezultat
+        seznamrokov = sorted(seznamrokov, key=lambda dat:dat.doroka, reverse=False)
+        params = {"podatki": seznamrokov}
+
+        is_logged_in(params)
+
+        self.render_template("ugani.html", params=params)
+
+
+
+
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
     webapp2.Route('/create', CreateHandler),
@@ -172,4 +201,5 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/redirect', RedirectHandler),
     webapp2.Route('/time', TimeHandler),
     webapp2.Route('/redirecttime', RedirecttimeHandler),
+    webapp2.Route('/ugani', UganiHandler),
 ], debug=True)
