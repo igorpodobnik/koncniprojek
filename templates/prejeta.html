@@ -12,6 +12,7 @@
     {% for forum in new %}
         <p>Pošiljatelj: <a href="/">{{ forum.sender }}</a></p>
         <p>Sporočilo: {{ forum.message }} </p>
+        <p>Kreirano: {{ forum.created }} </p>
         <p>   --------------------------- </p>
     {% endfor %}
 
@@ -20,6 +21,7 @@
     {% for forum in seznam %}
         <p>Pošiljatelj: <a href="/">{{ forum.sender }}</a></p>
         <p>Sporočilo: {{ forum.message }} </p>
+        <p>Kreirano: {{ forum.created }} </p>
         <p>   --------------------------- </p>
     {% endfor %}
 
