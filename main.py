@@ -193,18 +193,18 @@ class UganiHandler(BaseHandler):
 class AdminHandler(BaseHandler):
     def get(self):
         is_logged_in(params)
-        seznamuserjev = Uporabniki.query(Uporabniki.approved == False).fetch()
+        seznamuserjev = Uporabniki.query(Uporabniki.approved != True).fetch()
         seznamuserjevvseh = Uporabniki.query(Uporabniki.approved == True).fetch()
         posiljatelj = {"prejemniki":seznamuserjev, "vsiprejemniki":seznamuserjevvseh}
         params.update(posiljatelj)
         return self.render_template("admin.html" , params=params)
     def post(self):
-        for user in Uporabniki.query(Uporabniki.approved == False):
+        for user in Uporabniki.query(Uporabniki.approved != True):
             user.approved = True
             user.put()
             time.sleep(1)
         is_logged_in(params)
-        seznamuserjev = Uporabniki.query(Uporabniki.approved == False).fetch()
+        seznamuserjev = Uporabniki.query(Uporabniki.approved != True).fetch()
         seznamuserjevvseh = Uporabniki.query(Uporabniki.approved == True).fetch()
         posiljatelj = {"prejemniki":seznamuserjev, "vsiprejemniki":seznamuserjevvseh}
         params.update(posiljatelj)
