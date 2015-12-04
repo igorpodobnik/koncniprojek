@@ -28,6 +28,11 @@ def is_logged_in(P):
             steviloposlanih +=1
         starihje = {"stposlanih":steviloposlanih}
         Pint.update(starihje)
+        if emailprejemnika == "podobnik.igor@gmail.com":
+            adminuser = {"admin": "da"}
+        else:
+            adminuser = {"admin": "ne"}
+        Pint.update(adminuser)
     else:
         logiran = False
         login_url = users.create_login_url('/')
@@ -42,7 +47,6 @@ def preverialiobstaja():
     user = Uporabniki(user=emailprejemnika)
     # preverjam ce je user ze v bazi
     prisoten = Uporabniki.query(Uporabniki.user == emailprejemnika).fetch()
-    print prisoten
     if prisoten:
         print "NOTRI JE ZE!"
     else:

@@ -190,6 +190,23 @@ class UganiHandler(BaseHandler):
         self.render_template("ugani.html", params=params)
 
 
+class AdminHandler(BaseHandler):
+    def get(self):
+        is_logged_in(params)
+        seznamuserjev = Uporabniki.query(Uporabniki.approved == False).fetch()
+        posiljatelj = {"prejemniki":seznamuserjev}
+        params.update(posiljatelj)
+        return self.render_template("admin.html" , params=params)
+    def post(self):
+        for user in Uporabniki.query(Uporabniki.approved == False):
+            user.approved = True
+            user.put()
+            time.sleep(1)
+        is_logged_in(params)
+        seznamuserjev = Uporabniki.query(Uporabniki.approved == False).fetch()
+        posiljatelj = {"prejemniki":seznamuserjev}
+        params.update(posiljatelj)
+        return self.render_template("admin.html" , params=params)
 
 
 app = webapp2.WSGIApplication([
@@ -202,4 +219,5 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/time', TimeHandler),
     webapp2.Route('/redirecttime', RedirecttimeHandler),
     webapp2.Route('/ugani', UganiHandler),
+    webapp2.Route('/admin', AdminHandler),
 ], debug=True)

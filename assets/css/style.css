@@ -24,6 +24,20 @@ margin-bottom:100px;
   border-radious: 5px;
   }
 
+#linkadmin{
+
+  margin:0 auto;
+  max-width: 240px;
+  font: bold 18px Arial;
+
+  text-decoration: none;
+  background-color: blue;
+  color: #333333;
+  padding: 10px 18px;
+  margin-bottom: 20px;
+  border-radious: 5px;
+  }
+
 #col{
     list-style-type: none;
     text-align:center;

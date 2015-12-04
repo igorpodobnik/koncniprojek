@@ -1,0 +1,26 @@
+{% extends "base1.html" %}
+
+{% block title %}Main{% endblock title %}
+
+{% block specifika %}
+
+
+    <h1>Vnesite sporočilo</h1>
+
+    {% for n in prejemniki  %}
+        <p>{{ n.user }}</p>
+    {% endfor %}
+
+
+    <form method='post' action='/admin'>
+        <button class=myButton type='submit'>Approvi vse</button></li>
+    </form>
+
+
+    <div id="link">
+        <a href="/">Nazaj na začetek</a>
+    </div>
+
+
+
+{% endblock specifika %}

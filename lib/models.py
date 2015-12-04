@@ -15,6 +15,7 @@ class Sporocilo(ndb.Model):
 class Uporabniki(ndb.Model):
     user = ndb.StringProperty()
     approved = ndb.BooleanProperty(default=False)
+    ignore = ndb.BooleanProperty(default=False)
 
 class Randomstevilka(ndb.Model):
     stevilo = ndb.IntegerProperty()
