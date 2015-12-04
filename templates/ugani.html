@@ -5,18 +5,31 @@
 {% block specifika %}
     <h1>Vnesi dogodek</h1>
 
-    <form method='post' action='/redirect'>
+    <form method='post' action='/ugani'>
     <ol id="col">
-        <li id="cli">Vnesi številko<input  name='poskus' type="number" min="0" max="10000"></li>
+        <li id="cli">Vnesi številko<input  name='poskus' type="number" min="0" max="10000" value="{{ zadnji }}"></li>
         <li id="cli"><button class=myButton type='submit'>Poskusi</button></li>
     </ol>
     </form>
 
-
-    <img src="../assets/pic/dol.jpg" alt="Previsok si ugibal" style="width:204px;height:204px;">
-    <img src="../assets/pic/gor.jpg" alt="Prenizko si ugibal" style="width:204px;height:204px;">
-    <img src="../assets/pic/correct.jpg" alt="PRAVILNO" style="width:259px;height:194px;">
-
+---
+{{ uganil }}
+---
+    {% if uganil == "down" %}
+        <h2>Previsoko</h2>
+        <p>Tvoj zadnji poskus je bil: {{ zadnji }}</p>
+        <img src="../assets/pic/dol.jpg" alt="Previsok si ugibal" style="width:204px;height:204px;">
+    {% elif  uganil == "up" %}
+        <h2>Prenizko</h2>
+        <p>Tvoj zadnji poskus je bil: {{ zadnji }}</p>
+        <img src="../assets/pic/gor.jpg" alt="Prenizko si ugibal" style="width:204px;height:204px;">
+    {% elif  uganil == "ok" %}
+        <h2>Bravo!!!</h2>
+        <p>Tvoj zadnji poskus je bil: {{ zadnji }}</p>
+        <img src="../assets/pic/correct.jpg" alt="PRAVILNO" style="width:259px;height:194px;">
+    {% else %}
+        <h1>Naj se igra začne!</h1>
+    {% endif %}
 
     <div id="link">
         <a href="/">Nazaj na začetek</a>

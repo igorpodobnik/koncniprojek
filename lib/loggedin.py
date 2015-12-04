@@ -14,7 +14,6 @@ def is_logged_in(P):
         steviloposlanih = 0
         logiran = True
         logout_url = users.create_logout_url('/')
-        print "glej gor"
         approved=preveriapproved()
         paramsif = {"logiran": logiran, "logout_url": logout_url, "user": user,"approved":approved}
         Pint.update(paramsif)

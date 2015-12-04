@@ -15,6 +15,7 @@ from google.appengine.api import mail
 import datetime
 from datetime import datetime
 from lib.obletnica import izracun
+from lib.ugani import Random
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=False)
@@ -165,7 +166,9 @@ class RedirecttimeHandler(BaseHandler):
 
 class UganiHandler(BaseHandler):
     def post(self):
-
+        stevilka = self.request.get("poskus")
+        is_logged_in(params)
+        Random(stevilka,params)
 
         self.render_template("ugani.html", params=params)
 
