@@ -194,7 +194,8 @@ class AdminHandler(BaseHandler):
     def get(self):
         is_logged_in(params)
         seznamuserjev = Uporabniki.query(Uporabniki.approved == False).fetch()
-        posiljatelj = {"prejemniki":seznamuserjev}
+        seznamuserjevvseh = Uporabniki.query(Uporabniki.approved == True).fetch()
+        posiljatelj = {"prejemniki":seznamuserjev, "vsiprejemniki":seznamuserjevvseh}
         params.update(posiljatelj)
         return self.render_template("admin.html" , params=params)
     def post(self):
@@ -204,7 +205,8 @@ class AdminHandler(BaseHandler):
             time.sleep(1)
         is_logged_in(params)
         seznamuserjev = Uporabniki.query(Uporabniki.approved == False).fetch()
-        posiljatelj = {"prejemniki":seznamuserjev}
+        seznamuserjevvseh = Uporabniki.query(Uporabniki.approved == True).fetch()
+        posiljatelj = {"prejemniki":seznamuserjev, "vsiprejemniki":seznamuserjevvseh}
         params.update(posiljatelj)
         return self.render_template("admin.html" , params=params)
 

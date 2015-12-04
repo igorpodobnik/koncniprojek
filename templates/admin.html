@@ -5,7 +5,7 @@
 {% block specifika %}
 
 
-    <h1>Vnesite sporočilo</h1>
+    <h1>Nepotrjeni uporabniki</h1>
 
     {% for n in prejemniki  %}
         <p>{{ n.user }}</p>
@@ -16,7 +16,10 @@
         <button class=myButton type='submit'>Approvi vse</button></li>
     </form>
 
-
+    <h1>Potrjeni uporabniki</h1>
+    {% for n in vsiprejemniki  %}
+        <p>{{ n.user }}</p>
+    {% endfor %}
     <div id="link">
         <a href="/">Nazaj na začetek</a>
     </div>
