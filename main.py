@@ -223,8 +223,11 @@ class AdminHandler(BaseHandler):
         return self.render_template("admin.html" , params=params)
 
 class WarningHandler(BaseHandler):
-    #todo uiredi da lahko uporabnik sam izbere kdaj bo obvestilo prišlo
+    #todo uredi da lahko uporabnik sam izbere kdaj bo obvestilo prišlo
     def get(self):
+        #user = users.get_current_user()
+        #emailprejemnika = user.email()
+        #if emailprejemnika== "podobnik.igor@gmail.com":
         seznamrokov = Obletnice.query().fetch()
         for i in range(len(seznamrokov)):
             dan=seznamrokov[i].dan
@@ -241,6 +244,20 @@ class WarningHandler(BaseHandler):
                 kvajeto = seznamrokov[i].event
                 kdajjeto = seznamrokov[i].rawdt
                 mail.send_mail("podobnik.igor@gmail.com", emailprejemnik, "Še 1 dan do dogodka", "Samo da te spomnim, Jutri te caka obletnica od: %s, ki se je zgodil: %s " %(kvajeto,kdajjeto) )
+        return self.render_template("basicredirect.html")
+
+class UnreadHandler(BaseHandler):
+    def get(self):
+        #user = users.get_current_user()
+        #emailprejemnika = user.email()
+        #if emailprejemnika== "podobnik.igor@gmail.com":
+        newseznam = Sporocilo.query(Sporocilo.new == True).fetch()
+        for i in range(len(newseznam)):
+            emailprejemnik = newseznam[i].reciever
+            mail.send_mail("podobnik.igor@gmail.com", emailprejemnik, "Neprebrana sporočila", "Imas neprebrano sporocilo. Poglej na http://koncniprojekt.appspot.com/")
+        return self.render_template("basicredirect.html")
+
+
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
@@ -254,4 +271,5 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/ugani', UganiHandler),
     webapp2.Route('/admin', AdminHandler),
     webapp2.Route('/sendwarning', WarningHandler),
+    webapp2.Route('/sendunread', UnreadHandler),
 ], debug=True)

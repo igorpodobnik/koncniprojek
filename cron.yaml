@@ -1,4 +1,13 @@
 cron:
-- description: daily summary job
+- description: daily warning job
   url: /sendwarning
   schedule: every day 04:00
+
+- description: weekly unread messages job
+  url: /sendunread
+  schedule: every monday 05:00
+
+
+
+
+

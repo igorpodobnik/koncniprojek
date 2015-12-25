@@ -8,6 +8,15 @@ handlers:
 - url: /assets
   static_dir: assets
 
+- url: /sendwarning
+  script: main.app
+  login: admin
+
+- url: /sendunread
+  script: main.app
+  login: admin
+
+
 - url: .*
   script: main.app
 
