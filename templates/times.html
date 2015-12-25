@@ -6,15 +6,18 @@
     <h1>Vnesi dogodek</h1>
     <form method='post' action='/redirecttime'>
             <ol id="col">
-                <li id="cli">Datum: <input type= "date" id="noborderinput" value="1900-01-01"name='datum' ></li>
-                <li id="cli">Dogodek: <input name='dogodek' ></li>
+                <li id="cli">Datum: <input id="noborderinput" placeholder="6.5.1983"name='datum' required></li>
+                <li id="cli">Dogodek: <input name='dogodek' placeholder="Vpiši kakšno ime" required></li>
                 <li id="cli"><button class=myButton type='submit'>Shrani</button></li>
             </ol>
+    {% if veljavendatum == "ponovi" %}
+        <h1>Neveljaven format datuma! Poskusi znova v formatu dan.mesec.leto v številkah</h1>
 
+    {% endif %}
     <h1>Seznam prihajajočih dogodkov</h1>
 
     {% for forum in podatki %}
-        <p>Še <b>{{ forum.doroka }} dni</b> in bo dogodek: <b>{{ forum.event }}</b>, ki se je prvič zgodil: <b>{{ forum.datum }}</b></p>
+        <p>Še <b>{{ forum.doroka }} dni</b> in bo dogodek: <b>{{ forum.event }}</b>, ki se je prvič zgodil: <b>{{ forum.rawdt }}</b></p>
         <p>   --------------------------- </p>
     {% endfor %}
 

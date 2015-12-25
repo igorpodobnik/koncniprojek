@@ -129,7 +129,6 @@ class TimeHandler(BaseHandler):
         user = users.get_current_user()
         emailprejemnika = user.email()
         seznamrokov = Obletnice.query(Obletnice.pripada == emailprejemnika).fetch()
-
         for i in range(len(seznamrokov)):
             dan=seznamrokov[i].dan
             mesec=seznamrokov[i].mesec
@@ -150,19 +149,28 @@ class RedirecttimeHandler(BaseHandler):
         user = users.get_current_user()
         emailprejemnika = user.email()
         rawdt = self.request.get("datum")
-        leto = int(rawdt[:4])
-        mesec = int(rawdt [5:7])
-        dan = int(rawdt [8:10])
-        #
+        veljavendatum,dan,mesec,leto = vnosdatuma(rawdt)
         #mogoce bi bilo bolje ce bi class naredil in te podatke notri dal - se boljse v bazo pisal locene podatke. sestavil nazaj ce treba. izracun naredil glede na podatke iz baze
-        datum = datetime(leto,mesec,dan)
+        try:
+            datum = datetime(leto,mesec,dan)
+        except ValueError:
+            veljavendatum = "ponovi"
         dogodek = self.request.get("dogodek")
-        if dogodek != "Obvezno vpisi kaj notri":
-            dog = Obletnice(event=dogodek, datum=datum, pripada=emailprejemnika, dan=dan, mesec = mesec, leto=leto)
+        if (dogodek != "") and veljavendatum == "ok":
+            dog = Obletnice(event=dogodek, datum=datum, pripada=emailprejemnika, dan=dan, mesec = mesec, leto=leto, rawdt=rawdt)
             dog.put()
             time.sleep(1)
+        #zelo grdo narejen reload strani
+        seznamrokov = Obletnice.query(Obletnice.pripada == emailprejemnika).fetch()
+        for i in range(len(seznamrokov)):
+            dan=seznamrokov[i].dan
+            mesec=seznamrokov[i].mesec
+            rezultat = izracun(dan,mesec)
+            seznamrokov[i].doroka=rezultat
+        seznamrokov = sorted(seznamrokov, key=lambda dat:dat.doroka, reverse=False)
+        params = {"podatki": seznamrokov, "veljavendatum":veljavendatum}
         is_logged_in(params)
-        return self.render_template("redirecttime.html" , params=params)
+        return self.render_template("times.html" , params=params)
 
 class UganiHandler(BaseHandler):
     def post(self):

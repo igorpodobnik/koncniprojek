@@ -33,3 +33,4 @@ class Obletnice(ndb.Model):
     mesec = ndb.IntegerProperty()
     dan = ndb.IntegerProperty()
     doroka = ndb.IntegerProperty(default=0)
+    rawdt = ndb.StringProperty()

@@ -67,6 +67,7 @@ def vnosdatuma(datum):
             rezultat = "ponovi"
     else:
         rezultat = "ponovi"
+
     return rezultat,dan,mesec,leto
 
 
