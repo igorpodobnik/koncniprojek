@@ -2,10 +2,17 @@ __author__ = 'Igor'
 import datetime
 import relativedelta
 
+
+
+
+
 def razlika(ime):
     now = datetime.now()
     a = relativedelta(now,ime)
     return a
+
+
+
 
 """
 koncno = razlika(igor)

@@ -14,7 +14,7 @@ from google.appengine.ext import ndb
 from google.appengine.api import mail
 import datetime
 from datetime import datetime
-from lib.obletnica import izracun
+from lib.obletnica import izracun,vnosdatuma
 from lib.ugani import Random
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
@@ -153,7 +153,7 @@ class RedirecttimeHandler(BaseHandler):
         leto = int(rawdt[:4])
         mesec = int(rawdt [5:7])
         dan = int(rawdt [8:10])
-
+        #
         #mogoce bi bilo bolje ce bi class naredil in te podatke notri dal - se boljse v bazo pisal locene podatke. sestavil nazaj ce treba. izracun naredil glede na podatke iz baze
         datum = datetime(leto,mesec,dan)
         dogodek = self.request.get("dogodek")

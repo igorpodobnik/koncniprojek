@@ -6,6 +6,13 @@ from datetime import *; from relativedelta import *
 
 
 
+prva = 1
+druga = 2
+tretja = 3
+cetrta = 4
+peta = 5
+c="."
+
 
 def izracun(dan,mesec):
     today = date.today()
@@ -31,4 +38,35 @@ def izracunrojdneva(ime):
         obletnica=date(novoleto,obletnica.month,obletnica.day)
     koliko = obletnica - today
     return koliko.days
+
+
+def vnosdatuma(datum):
+    rezultat="ok"
+    pozicije=[pos for pos, char in enumerate(datum) if char == c]
+    if prva in pozicije:
+        if tretja in pozicije:
+            dan = int(datum[:1])
+            mesec = int(datum[2:3])
+            leto = int(datum[4:8])
+        elif cetrta in pozicije:
+            dan = int(datum[:1])
+            mesec = int(datum[2:4])
+            leto = int(datum[5:9])
+        else:
+            rezultat = "ponovi"
+    elif druga in pozicije:
+        if peta in pozicije:
+            dan = int(datum[:2])
+            mesec = int(datum[3:5])
+            leto = int(datum[6:10])
+        elif cetrta in pozicije:
+            dan = int(datum[:2])
+            mesec = int(datum[3:4])
+            leto = int(datum[5:9])
+        else:
+            rezultat = "ponovi"
+    else:
+        rezultat = "ponovi"
+    return rezultat,dan,mesec,leto
+
 
