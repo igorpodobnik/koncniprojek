@@ -128,6 +128,7 @@ class TimeHandler(BaseHandler):
 
         user = users.get_current_user()
         emailprejemnika = user.email()
+        #todo dej v eno funkcijo ker drugje tudi tole kličem
         seznamrokov = Obletnice.query(Obletnice.pripada == emailprejemnika).fetch()
         for i in range(len(seznamrokov)):
             dan=seznamrokov[i].dan
@@ -160,7 +161,7 @@ class RedirecttimeHandler(BaseHandler):
             dog = Obletnice(event=dogodek, datum=datum, pripada=emailprejemnika, dan=dan, mesec = mesec, leto=leto, rawdt=rawdt)
             dog.put()
             time.sleep(1)
-        #zelo grdo narejen reload strani
+        #todo: zelo grdo narejen reload strani
         seznamrokov = Obletnice.query(Obletnice.pripada == emailprejemnika).fetch()
         for i in range(len(seznamrokov)):
             dan=seznamrokov[i].dan
@@ -221,6 +222,25 @@ class AdminHandler(BaseHandler):
         params.update(posiljatelj)
         return self.render_template("admin.html" , params=params)
 
+class WarningHandler(BaseHandler):
+    #todo uiredi da lahko uporabnik sam izbere kdaj bo obvestilo prišlo
+    def get(self):
+        seznamrokov = Obletnice.query().fetch()
+        for i in range(len(seznamrokov)):
+            dan=seznamrokov[i].dan
+            mesec=seznamrokov[i].mesec
+            rezultat = izracun(dan,mesec)
+            seznamrokov[i].doroka=rezultat
+            if rezultat ==7:
+                emailprejemnik = seznamrokov[i].pripada
+                kvajeto = seznamrokov[i].event
+                kdajjeto = seznamrokov[i].rawdt
+                mail.send_mail("podobnik.igor@gmail.com", emailprejemnik, "Še 7 dni do dogodka", "Samo da te spomnim, cez 7 dni te caka obletnica od: %s, ki se je zgodil: %s " %(kvajeto,kdajjeto) )
+            elif rezultat ==1:
+                emailprejemnik = seznamrokov[i].pripada
+                kvajeto = seznamrokov[i].event
+                kdajjeto = seznamrokov[i].rawdt
+                mail.send_mail("podobnik.igor@gmail.com", emailprejemnik, "Še 1 dan do dogodka", "Samo da te spomnim, Jutri te caka obletnica od: %s, ki se je zgodil: %s " %(kvajeto,kdajjeto) )
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
@@ -233,4 +253,5 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/redirecttime', RedirecttimeHandler),
     webapp2.Route('/ugani', UganiHandler),
     webapp2.Route('/admin', AdminHandler),
+    webapp2.Route('/sendwarning', WarningHandler),
 ], debug=True)

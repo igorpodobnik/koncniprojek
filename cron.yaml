@@ -1,0 +1,4 @@
+cron:
+- description: daily summary job
+  url: /sendwarning
+  schedule: every day 04:00

@@ -109,3 +109,6 @@ print rez
 print d
 print m
 print l
+
+print "yes"
+print ("hehe %s hehe %s" %(prva,druga))
