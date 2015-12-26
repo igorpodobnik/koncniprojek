@@ -3,18 +3,7 @@
 {% block title %}Ugibanje številke{% endblock title %}
 
 {% block specifika %}
-    <h1>Vnesi dogodek</h1>
 
-    <form method='post' action='/ugani'>
-    <ol id="col">
-        <li id="cli">Vnesi številko<input  name='poskus' type="number" min="0" max="10000" value="{{ zadnji }}"></li>
-        <li id="cli"><button class=myButton type='submit'>Poskusi</button></li>
-    </ol>
-    </form>
-
----
-{{ uganil }}
----
     {% if uganil == "down" %}
         <h2>Previsoko</h2>
         <p>Tvoj zadnji poskus je bil: {{ zadnji }}</p>
@@ -30,6 +19,14 @@
     {% else %}
         <h1>Naj se igra začne!</h1>
     {% endif %}
+
+    <form method='post' action='/ugani'>
+    <ol id="col">
+        <li id="cli">Vnesi številko<input  name='poskus' type="number" min="0" max="10000" value="{{ zadnji }}"></li>
+        <li id="cli"><button class=myButton type='submit'>Poskusi</button></li>
+    </ol>
+    </form>
+
 
     <div id="link">
         <a href="/">Nazaj na začetek</a>

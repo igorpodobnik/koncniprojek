@@ -8,14 +8,17 @@ import jinja2
 import webapp2
 from lib.loggedin import is_logged_in
 from google.appengine.api import urlfetch
-from lib.models import Sporocilo,Uporabniki,Obletnice
+from lib.models import Sporocilo,Uporabniki,Obletnice,Randomstevilka
 from google.appengine.api import users
 from google.appengine.ext import ndb
 from google.appengine.api import mail
 import datetime
 from datetime import datetime
 from lib.obletnica import izracun,vnosdatuma
-from lib.ugani import Random
+from lib.ugani import Random,generiraj_random
+
+
+
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=False)
@@ -178,27 +181,21 @@ class UganiHandler(BaseHandler):
         stevilka = self.request.get("poskus")
         is_logged_in(params)
         Random(stevilka,params)
-
         self.render_template("ugani.html", params=params)
 
 
     def get(self):
         podatki = "DA"
+        generiraj_random()
+        oldseznam = Randomstevilka.query(Randomstevilka.aktivna == True).fetch()
+        stevilka=oldseznam[0].zadnjiposkus
+        uganil=oldseznam[0].zadnirezultat
 
         user = users.get_current_user()
         emailprejemnika = user.email()
-        seznamrokov = Obletnice.query(Obletnice.pripada == emailprejemnika).fetch()
-
-        for i in range(len(seznamrokov)):
-            dan=seznamrokov[i].dan
-            mesec=seznamrokov[i].mesec
-            rezultat = izracun(dan,mesec)
-            seznamrokov[i].doroka=rezultat
-        seznamrokov = sorted(seznamrokov, key=lambda dat:dat.doroka, reverse=False)
-        params = {"podatki": seznamrokov}
-
+        params = {"podatki": podatki,"randomnumber":glavna_stevilka,"zadnji":stevilka,"uganil":uganil}
         is_logged_in(params)
-
+        #Random(stevilka,params)
         self.render_template("ugani.html", params=params)
 
 

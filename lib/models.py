@@ -20,10 +20,11 @@ class Uporabniki(ndb.Model):
 class Randomstevilka(ndb.Model):
     stevilo = ndb.IntegerProperty()
     uganil = ndb.StringProperty()
-    vposkusih = ndb.IntegerProperty()
-    zadnjiposkus = ndb.IntegerProperty()
-    zadnirezultat = ndb.StringProperty()
+    vposkusih = ndb.IntegerProperty(default=0)
+    zadnjiposkus = ndb.IntegerProperty(default=0)
+    zadnirezultat = ndb.StringProperty(default="up")
     created = ndb.DateTimeProperty(auto_now_add=True)
+    aktivna = ndb.BooleanProperty(default=True)
 
 class Obletnice(ndb.Model):
     event = ndb.StringProperty()
