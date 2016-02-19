@@ -1,0 +1,24 @@
+{% extends "base1.html" %}
+
+{% block title %}Main{% endblock title %}
+
+{% block specifika %}
+
+
+    <h1>Vsa prejeta sporčila</h1>
+
+    <p id="phead">--- Nova sporočila ---</p>
+
+    {% for l in lestvica %}
+        <p>Številka je bila: {{ l.stevilo }}, zadnji je uganil {{ l.uganil }} v {{ l.vposkusih }} poskusih.</p>
+        <p>   --------------------------- </p>
+    {% endfor %}
+
+
+    <div id="link">
+        <a id=aback href="/ugani">Tukaj klikni za nazaj</a>
+    </div>
+
+
+
+{% endblock specifika %}

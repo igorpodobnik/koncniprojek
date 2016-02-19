@@ -22,8 +22,8 @@ def Random(stevilka,params):
             for user in Randomstevilka.query(Randomstevilka.aktivna == True):
                 user.aktivna = False
                 user.put()
-        povecaj_poskuse(stevilka,tekst)
-        parametri={"random":alijerandom,"randomnumber":glavna_stevilka, "uganil":tekst,"zadnji":stevilka}
+        stposkusov=povecaj_poskuse(stevilka,tekst)
+        parametri={"random":alijerandom,"randomnumber":glavna_stevilka, "uganil":tekst,"zadnji":stevilka,"stposkusov":stposkusov}
         R.update(parametri)
         return R
 
@@ -57,4 +57,5 @@ def povecaj_poskuse(ugib,updown):
         user.zadnirezultat = updown
         user.uganil = emailprejemnika
         user.put()
+    return user.vposkusih
 

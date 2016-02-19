@@ -268,6 +268,15 @@ class UnreadHandler(BaseHandler):
         return self.render_template("basicredirect.html")
 
 
+class LestvicaposkusovHandler(BaseHandler):
+    def get(self):
+        is_logged_in(params)
+        lestvicaorig = Randomstevilka.query(Randomstevilka.aktivna == False).fetch()
+        lestvicaorig = sorted(lestvicaorig, key=lambda st:st.vposkusih, reverse=False)
+        lestvica={"lestvica":lestvicaorig}
+        params.update(lestvica)
+        return self.render_template("lestvica.html" , params=params)
+
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
@@ -282,4 +291,5 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin', AdminHandler),
     webapp2.Route('/sendwarning', WarningHandler),
     webapp2.Route('/sendunread', UnreadHandler),
+    webapp2.Route('/lestvicaugani', LestvicaposkusovHandler),
 ], debug=True)

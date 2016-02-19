@@ -15,6 +15,7 @@
     {% elif  uganil == "ok" %}
         <h2>Bravo!!!</h2>
         <p>Tvoj zadnji poskus je bil: {{ zadnji }}</p>
+        <p>Rabil pa si {{ stposkusov }} poskusov</p>
         <img src="../assets/pic/correct.jpg" alt="PRAVILNO" style="width:259px;height:194px;">
     {% else %}
         <h1>Naj se igra začne!</h1>
@@ -28,6 +29,9 @@
     </form>
 
 
+    <div id="link">
+        <a href="/lestvicaugani">Lestvica poskusov</a>
+    </div>
     <div id="link">
         <a href="/">Nazaj na začetek</a>
     </div>
