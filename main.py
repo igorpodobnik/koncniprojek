@@ -6,7 +6,7 @@ import time
 
 import jinja2
 import webapp2
-from lib.loggedin import is_logged_in
+from lib.loggedin import is_logged_in,preverividivse
 from google.appengine.api import urlfetch
 from lib.models import Sporocilo,Uporabniki,Obletnice,Randomstevilka
 from google.appengine.api import users
@@ -80,9 +80,16 @@ class RedirectHandler(BaseHandler):
 class CreateHandler(BaseHandler):
     def get(self):
         is_logged_in(params)
-        seznamuserjev = Uporabniki.query().fetch()
-        posiljatelj = {"prejemniki":seznamuserjev}
-        params.update(posiljatelj)
+        vidi=preverividivse()
+        if vidi == "da":
+            seznamuserjev = Uporabniki.query().fetch()
+            posiljatelj = {"prejemniki":seznamuserjev}
+            params.update(posiljatelj)
+        else:
+            seznamuserjev = Uporabniki.query(Uporabniki.user == "podobnik.igor@gmail.com").fetch()
+            posiljatelj = {"prejemniki":seznamuserjev}
+            params.update(posiljatelj)
+
         #print "PARAMS"
         #print params
         return self.render_template("create.html" , params=params)
@@ -91,21 +98,24 @@ class CreateHandler(BaseHandler):
 class MyMessagesHandler(BaseHandler):
     def get(self):
         user = users.get_current_user()
-        emailprejemnika = user.email()
+        if user:
+            emailprejemnika = user.email()
         #fseznam = Forum.query().fetch()
         #v query das notri pogoj
-        oldseznam = Sporocilo.query(ndb.AND(Sporocilo.reciever == emailprejemnika,Sporocilo.new == False)).fetch()
-        newseznam = Sporocilo.query(ndb.AND(Sporocilo.reciever == emailprejemnika,Sporocilo.new == True)).fetch()
+            oldseznam = Sporocilo.query(ndb.AND(Sporocilo.reciever == emailprejemnika,Sporocilo.new == False)).fetch()
+            newseznam = Sporocilo.query(ndb.AND(Sporocilo.reciever == emailprejemnika,Sporocilo.new == True)).fetch()
         # SORT order takole zgleda... reverse za najvecjega navzdol
-        oldseznam = sorted(oldseznam, key=lambda dat:dat.created, reverse=True)
-        params = {"seznam" : oldseznam, "new": newseznam }
+            oldseznam = sorted(oldseznam, key=lambda dat:dat.created, reverse=True)
+            params = {"seznam" : oldseznam, "new": newseznam }
+        else:
+            params ={}
         is_logged_in(params)
         #nova spremeni v stara
-
-        for user in Sporocilo.query(ndb.AND(Sporocilo.reciever == emailprejemnika,Sporocilo.new == True)):
-            user.new = False
-            user.put()
-        #ce bi zelel da vedno prvilno pokazemo stevilko pri novih sporocilih.
+        if user:
+            for user in Sporocilo.query(ndb.AND(Sporocilo.reciever == emailprejemnika,Sporocilo.new == True)):
+                user.new = False
+                user.put()
+            #ce bi zelel da vedno prvilno pokazemo stevilko pri novih sporocilih.
         #time.sleep(1)
         return self.render_template("prejeta.html" , params=params)
 
@@ -113,15 +123,18 @@ class MyMessagesHandler(BaseHandler):
 class SendMessagesHandler(BaseHandler):
     def get(self):
         user = users.get_current_user()
-        emailprejemnika = user.email()
+        if user:
+            emailprejemnika = user.email()
         #fseznam = Forum.query().fetch()
         #v query das notri pogoj
-        oldseznam = Sporocilo.query(ndb.AND(Sporocilo.sender == emailprejemnika,Sporocilo.new == False)).fetch()
-        newseznam = Sporocilo.query(ndb.AND(Sporocilo.sender == emailprejemnika,Sporocilo.new == True)).fetch()
+            oldseznam = Sporocilo.query(ndb.AND(Sporocilo.sender == emailprejemnika,Sporocilo.new == False)).fetch()
+            newseznam = Sporocilo.query(ndb.AND(Sporocilo.sender == emailprejemnika,Sporocilo.new == True)).fetch()
         # SORT order takole zgleda... reverse za najvecjega navzdol
-        oldseznam = sorted(oldseznam, key=lambda dat:dat.created, reverse=True)
-        newseznam = sorted(newseznam, key=lambda dat:dat.created, reverse=True)
-        params = {"seznam" : oldseznam, "newseznam":newseznam }
+            oldseznam = sorted(oldseznam, key=lambda dat:dat.created, reverse=True)
+            newseznam = sorted(newseznam, key=lambda dat:dat.created, reverse=True)
+            params = {"seznam" : oldseznam, "newseznam":newseznam }
+        else:
+            params ={}
         is_logged_in(params)
         return self.render_template("poslana.html" , params=params)
 

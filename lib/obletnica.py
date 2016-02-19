@@ -41,25 +41,28 @@ def izracunrojdneva(ime):
 
 
 def vnosdatuma(datum):
+    dan=0
+    mesec=0
+    leto=0
     rezultat="ok"
     pozicije=[pos for pos, char in enumerate(datum) if char == c]
     if prva in pozicije:
-        if tretja in pozicije:
+        if tretja in pozicije and len(datum)==8:
             dan = int(datum[:1])
             mesec = int(datum[2:3])
             leto = int(datum[4:8])
-        elif cetrta in pozicije:
+        elif cetrta in pozicije and len(datum)==9:
             dan = int(datum[:1])
             mesec = int(datum[2:4])
             leto = int(datum[5:9])
         else:
             rezultat = "ponovi"
     elif druga in pozicije:
-        if peta in pozicije:
+        if peta in pozicije and len(datum)==10:
             dan = int(datum[:2])
             mesec = int(datum[3:5])
             leto = int(datum[6:10])
-        elif cetrta in pozicije:
+        elif cetrta in pozicije and len(datum)==9:
             dan = int(datum[:2])
             mesec = int(datum[3:4])
             leto = int(datum[5:9])
