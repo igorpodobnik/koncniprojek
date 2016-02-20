@@ -1,0 +1,23 @@
+{% extends "base1.html" %}
+
+{% block title %}Posamezno{% endblock title %}
+
+{% block specifika %}
+
+
+    <h1>Prejeto sporočilo</h1>
+
+    <p>Uporabnik {{ posuser.user }}   </p>
+    <p>Approvan: {{ posuser.approved }} </p>
+    <p>Vidi vse: {{ posuser.vidivse }}</p>
+    <p>Ignoriran: {{ posuser.ignore }}</p>
+    <p>Kreiran: {{ posuser.created }}</p>
+    <p>   --------------------------- </p>
+
+    <div id="link">
+        <a id=aback href="/admin">Tukaj klikni za nazaj</a>
+    </div>
+
+
+
+{% endblock specifika %}

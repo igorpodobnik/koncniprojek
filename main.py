@@ -215,19 +215,19 @@ class UganiHandler(BaseHandler):
 class AdminHandler(BaseHandler):
     def get(self):
         is_logged_in(params)
-        seznamuserjev = Uporabniki.query(Uporabniki.approved != True).fetch()
-        seznamuserjevvseh = Uporabniki.query(Uporabniki.approved == True).fetch()
+        seznamuserjev = Uporabniki.query(Uporabniki.vidivse != True).fetch()
+        seznamuserjevvseh = Uporabniki.query().fetch()
         posiljatelj = {"prejemniki":seznamuserjev, "vsiprejemniki":seznamuserjevvseh}
         params.update(posiljatelj)
         return self.render_template("admin.html" , params=params)
     def post(self):
-        for user in Uporabniki.query(Uporabniki.approved != True):
-            user.approved = True
+        for user in Uporabniki.query(Uporabniki.vidivse != True):
+            user.vidivse = True
             user.put()
             time.sleep(1)
         is_logged_in(params)
-        seznamuserjev = Uporabniki.query(Uporabniki.approved != True).fetch()
-        seznamuserjevvseh = Uporabniki.query(Uporabniki.approved == True).fetch()
+        seznamuserjev = Uporabniki.query(Uporabniki.vidivse != True).fetch()
+        seznamuserjevvseh = Uporabniki.query().fetch()
         posiljatelj = {"prejemniki":seznamuserjev, "vsiprejemniki":seznamuserjevvseh}
         params.update(posiljatelj)
         return self.render_template("admin.html" , params=params)
@@ -277,6 +277,37 @@ class LestvicaposkusovHandler(BaseHandler):
         params.update(lestvica)
         return self.render_template("lestvica.html" , params=params)
 
+class PosameznoSporociloHandler(BaseHandler):
+    def get(self, sporocilo_id):
+        sporocilo = Sporocilo.get_by_id(int(sporocilo_id))
+        params = {"sporocilo": sporocilo}
+        is_logged_in(params)
+        return self.render_template("posamezno.html" , params=params)
+
+class PosameznoSporociloSendHandler(BaseHandler):
+    def get(self, sporocilo_id):
+        sporocilo = Sporocilo.get_by_id(int(sporocilo_id))
+        params = {"sporocilo": sporocilo}
+        is_logged_in(params)
+        return self.render_template("posameznoposlano.html" , params=params)
+
+class PosamezniUserHandler(BaseHandler):
+    def get(self, user_id):
+        posuser = Uporabniki.get_by_id(int(user_id))
+        ##user = Uporabniki.query(Uporabniki.key.id() == user_id).fetch()
+        params = {"posuser": posuser}
+        is_logged_in(params)
+        return self.render_template("posuser.html" , params=params)
+
+class PosamezniUserVidiHandler(BaseHandler):
+    def get(self, user_id):
+        posuser = Uporabniki.get_by_id(int(user_id))
+        posuser.vidivse = True
+        posuser.put()
+        time.sleep(1)
+        ##user = Uporabniki.query(Uporabniki.key.id() == user_id).fetch()
+        self.redirect_to("admin1")
+
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
@@ -288,8 +319,12 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/time', TimeHandler),
     webapp2.Route('/redirecttime', RedirecttimeHandler),
     webapp2.Route('/ugani', UganiHandler),
-    webapp2.Route('/admin', AdminHandler),
+    webapp2.Route('/admin', AdminHandler, name="admin1"),
     webapp2.Route('/sendwarning', WarningHandler),
     webapp2.Route('/sendunread', UnreadHandler),
     webapp2.Route('/lestvicaugani', LestvicaposkusovHandler),
+    webapp2.Route('/mymessages/<sporocilo_id:\d+>', PosameznoSporociloHandler),
+    webapp2.Route('/admin/<user_id:\d+>', PosamezniUserHandler),
+    webapp2.Route('/admin/<user_id:\d+>/vidi', PosamezniUserVidiHandler),
+    webapp2.Route('/sendmessages/<sporocilo_id:\d+>', PosameznoSporociloSendHandler),
 ], debug=True)

@@ -8,17 +8,20 @@
     <h1>Nepotrjeni uporabniki</h1>
 
     {% for n in prejemniki  %}
-        <p>{{ n.user }}</p>
-    {% endfor %}
+        <p><a href="/admin/{{ n.key.id() }}">{{ n.user }}</a></p>
+        <div id="link">
+        <a href="/admin/{{ n.key.id() }}/vidi">Dovoli da vidi vse prejemnike</a>
+        </div>
+{% endfor %}
 
 
     <form method='post' action='/admin'>
-        <button class=myButton type='submit'>Approvi vse</button></li>
+        <button class=myButton type='submit'>Vsem dovili da vidijo vse prejemnike</button></li>
     </form>
 
     <h1>Potrjeni uporabniki</h1>
     {% for n in vsiprejemniki  %}
-        <p>{{ n.user }}</p>
+        <p><a href="/admin/{{ n.key.id() }}">{{ n.user }}</a></p>
     {% endfor %}
 
     <div id="link">

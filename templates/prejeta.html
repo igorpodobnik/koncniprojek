@@ -10,8 +10,8 @@
     <p id="phead">--- Nova sporočila ---</p>
 
     {% for forum in new %}
-        <p>Pošiljatelj: <a href="/">{{ forum.sender }}</a></p>
-        <p>Sporočilo: {{ forum.message }} </p>
+        <p>Pošiljatelj: {{ forum.sender }}</p>
+        <p>Sporočilo: <a href="/mymessages/{{ forum.key.id() }}">{{ forum.message }}</a></p>
         <p>Kreirano: {{ forum.created }} </p>
         <p>   --------------------------- </p>
     {% endfor %}
@@ -19,8 +19,8 @@
     <p id="phead">--- Stara sporočila ---</p>
 
     {% for forum in seznam %}
-        <p>Pošiljatelj: <a href="/">{{ forum.sender }}</a></p>
-        <p>Sporočilo: {{ forum.message }} </p>
+        <p>Pošiljatelj: {{ forum.sender }}</p>
+        <p>Sporočilo: <a href="/mymessages/{{ forum.key.id() }}">{{ forum.message }}</a></p>
         <p>Kreirano: {{ forum.created }} </p>
         <p>   --------------------------- </p>
     {% endfor %}

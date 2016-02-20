@@ -1,0 +1,21 @@
+{% extends "base1.html" %}
+
+{% block title %}Posamezno{% endblock title %}
+
+{% block specifika %}
+
+
+    <h1>Poslano sporočilo</h1>
+
+    <p>Pošiljatelj: {{ sporocilo.sender }}</p>
+    <p>Sporočilo: {{ sporocilo.message }}</a></p>
+    <p>Kreirano: {{ sporocilo.created }} </p>
+    <p>   --------------------------- </p>
+
+    <div id="link">
+        <a id=aback href="/sendmessages">Tukaj klikni za nazaj</a>
+    </div>
+
+
+
+{% endblock specifika %}

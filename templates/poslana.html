@@ -10,16 +10,18 @@
     <p id="phead">--- Neprebrana sporočila ---</p>
 
     {% for forum in newseznam %}
-        <p>Prejemnik: <a href="/">{{ forum.reciever }}</a></p>
-        <p>Sporočilo: {{ forum.message }} </p>
+        <p>Prejemnik: {{ forum.reciever }}</p>
+        <p>Sporočilo: <a href="/sendmessages/{{ forum.key.id() }}">{{ forum.message }}</a></p>
+        <p>Kreirano: {{ forum.created }} </p>
         <p>   --------------------------- </p>
     {% endfor %}
 
     <p id="phead">--- Prebrana sporočila ---</p>
 
     {% for forum in seznam %}
-        <p>Prejemnik: <a href="/">{{ forum.reciever }}</a></p>
-        <p>Sporočilo: {{ forum.message }} </p>
+        <p>Prejemnik: {{ forum.reciever }}</a></p>
+        <p>Sporočilo: <a href="/sendmessages/{{ forum.key.id() }}">{{ forum.message }}</a></p>
+        <p>Kreirano: {{ forum.created }} </p>
         <p>   --------------------------- </p>
     {% endfor %}
 

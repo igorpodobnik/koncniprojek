@@ -17,6 +17,7 @@ class Uporabniki(ndb.Model):
     approved = ndb.BooleanProperty(default=True)
     ignore = ndb.BooleanProperty(default=False)
     vidivse = ndb.BooleanProperty(default=False)
+    created = ndb.DateTimeProperty(auto_now_add=True)
 
 class Randomstevilka(ndb.Model):
     stevilo = ndb.IntegerProperty()
